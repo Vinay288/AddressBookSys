@@ -6,6 +6,8 @@ public class AddressBookMain {
 		Scanner s = new Scanner(System.in);
 		System.out.println("Welcome to Address Book Program");
 		AddressBook addressBook = new AddressBook();
+		addressBook.addContact();
+		addressBook.showContacts();
 
 	}
 

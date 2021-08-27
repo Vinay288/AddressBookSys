@@ -5,11 +5,6 @@ public class AddressBookMain {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program");
 		MultipleAddressBook addressBooks= new MultipleAddressBook();
-//		addressBooks.addContact();
-//		addressBooks.editContact();
-//		addressBooks.showContacts();
-//		addressBooks.deleteContact();
-//		addressBooks.addAddressBooks();
 		Scanner s = new Scanner(System.in);
 		for (;;) {
 			

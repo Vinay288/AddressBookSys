@@ -4,16 +4,12 @@ public class AddressBookMain {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program");
-<<<<<<< HEAD
 		AddressBook addressBooks = new AddressBook();
 
 		menu(addressBooks);
 	}
 
 	public static void menu(AddressBook addressBooks) {
-=======
-		MultipleAddressBook addressBooks= new MultipleAddressBook();
->>>>>>> c8c802aa0beb12634ad7c985564aa4409b23675e
 		Scanner s = new Scanner(System.in);
 		for (;;) {
 

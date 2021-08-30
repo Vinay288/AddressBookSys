@@ -12,7 +12,6 @@ public class AddressBookMain {
 	public static void menu(AddressBook addressBooks) {
 		Scanner s = new Scanner(System.in);
 		for (;;) {
-
 			for (;;) {
 				System.out.println(
 						"1.create new address book\n2.edit existing address book\n3.show address books\n4.exit");

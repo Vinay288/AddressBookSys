@@ -6,7 +6,6 @@ public class AddressBook {
 	private int bookNumber = -1;
 	private static int numberOfAddressBooks = 0;
 	Scanner s = new Scanner(System.in);
-
 	AddressBook() {
 		addressBookArray = new AddressBookImpl[10];
 	}
@@ -65,5 +64,4 @@ public class AddressBook {
 	public void deleteContact() {
 		addressBookArray[bookNumber].deleteContact();
 	}
-
 }

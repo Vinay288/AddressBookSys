@@ -4,7 +4,7 @@ public class Contact {
 	private String firstName, lastName, address, city, state, email;
 	private int zip, phoneNumber;
 
-	Contact(String firstName, String lastName, String address, String city, String state, int zip, int phoneNumber,
+	Contact(String firstName, String lastName, String city, String address, String state, int zip, int phoneNumber,
 			String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -79,11 +79,11 @@ public class Contact {
 	public void setEmailId(String email) {
 		this.email = email;
 	}
-	
+
 	@Override
 	public boolean equals(Object anotherObject) {
-		HashMap<String, Contact> addressBook=(HashMap<String, Contact>) anotherObject;
-		if(addressBook.containsKey(this.getFirstName())) {
+		HashMap<String, Contact> addressBook = (HashMap<String, Contact>) anotherObject;
+		if (addressBook.containsKey(this.getFirstName())) {
 			return true;
 		}
 		return false;
@@ -91,8 +91,9 @@ public class Contact {
 
 	@Override
 	public String toString() {
-		return "First Name: "+getFirstName() + "\n" + "Last Name: "+getLastName() + "\n" + "Address: "+getAddress() + "\n" +"Phone Number: "+ getPhoneNumber() + "\n"
-				+ "Email: "+getEmailId();
+		return "First Name: " + getFirstName() + "\n" + "Last Name: " + getLastName() + "\n" + "city :" + getCity()
+				+ "\n" + "Address: " + getAddress() + "\n" + "state: " + getState() + "\n" + "Phone Number: "
+				+ getPhoneNumber() + "\n" + "Email: " + getEmailId();
 	}
 
 }

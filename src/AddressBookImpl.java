@@ -1,16 +1,18 @@
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBookImpl implements AddressBookIf{
 
 	Scanner s = new Scanner(System.in);
-	private Contact contactBook[];
-	private static int numberOfConatcts = 0;
+	private Map<String,Contact> addressBook;
 	private String addressBookName;
+	private Contact editContact;
 
 	AddressBookImpl(String addressBookName) {
-		this.contactBook = new Contact[20];
+		addressBook = new HashMap<String, Contact>();
 		this.addressBookName = addressBookName;
 	}
 
@@ -37,15 +39,14 @@ public class AddressBookImpl implements AddressBookIf{
 		int phoneNumber = s.nextInt();
 		System.out.println("Enter email");
 		String email = s.next();
-		contactBook[numberOfConatcts] = new Contact(firstName, lastName, address, state, city, zip, phoneNumber, email);
-		numberOfConatcts++;
+		Contact contact = new Contact(firstName, lastName, address, state, city, zip, phoneNumber, email);
+		addressBook.put(firstName,contact );
 	}
 
 	@Override
 	public void showContacts() {
-		for (int i = 0; i < numberOfConatcts; i++) {
-			System.out.println(contactBook[i]);
-		}
+		for(Contact contact:addressBook.values())
+			System.out.println(contact);
 	}
 
 	@Override
@@ -56,55 +57,56 @@ public class AddressBookImpl implements AddressBookIf{
 		System.out.println("Enter First Name of contact to be edited");
 		String editName = s.next();
 		int index = 0;
-		for (index = 0; index < numberOfConatcts; index++) {
-			if (contactBook[index].getFirstName().equals(editName)) {
-				break;
-			} else {
-				System.out.println("no such conatact found");
-				return;
-			}
+
+		if(!addressBook.containsKey(editName)) {
+			System.out.println("no such conatact found");
+			return;
 		}
+		else {
+			editContact=addressBook.get(editName);
+		}
+			
 		switch (choice) {
 		case 1:
 			System.out.println("Enter new First Name");
 			String newFName = s.next();
-			contactBook[index].setFirstName(newFName);
+			editContact.setFirstName(newFName);
 			System.out.println("Edited");
 			break;
 		case 2:
 			System.out.println("Enter new Last Name");
 			String newLName = s.next();
-			contactBook[index].setLastName(newLName);
+			editContact.setLastName(newLName);
 			System.out.println("Edited");
 			break;
 		case 3:
 			System.out.println("Enter new City");
 			String newCity = s.next();
-			contactBook[index].setCity(newCity);
+			editContact.setCity(newCity);
 			System.out.println("Edited");
 			break;
 		case 4:
 			System.out.println("Enter new State");
 			String newState = s.next();
-			contactBook[index].setState(newState);
+			editContact.setState(newState);
 			System.out.println("Edited");
 			break;
 		case 5:
 			System.out.println("Enter new State");
 			int newZip = s.nextInt();
-			contactBook[index].setZipCode(newZip);
+			editContact.setZipCode(newZip);
 			System.out.println("Edited");
 			break;
 		case 6:
 			System.out.println("Enter new Phone Number");
 			int newPNumber = s.nextInt();
-			contactBook[index].setPhoneNumber(newPNumber);
+			editContact.setPhoneNumber(newPNumber);
 			System.out.println("Edited");
 			break;
 		case 7:
 			System.out.println("Enter new Email");
 			String newEmail = s.next();
-			contactBook[index].setEmailId(newEmail);
+			editContact.setEmailId(newEmail);
 			System.out.println("Edited");
 			break;
 		}
@@ -114,20 +116,12 @@ public class AddressBookImpl implements AddressBookIf{
 	public void deleteContact() {
 		System.out.println("Enter Name of Contact to delete");
 		String deletedName = s.next();
-		int index = 0;
-		for (index = 0; index < numberOfConatcts; index++) {
-			if (contactBook[index].getFirstName().equals(deletedName)) {
-				break;
-			} else {
-				System.out.println("there is no such contact");
-				return;
-			}
+		
+		if(addressBook.containsKey(deletedName)) {
+			addressBook.remove(deletedName);
+			System.out.println("deleted "+deletedName);
+			return;
 		}
-
-		for (int i = index + 1; i < numberOfConatcts; i++) {
-			contactBook[i - 1] = contactBook[i];
-		}
-		numberOfConatcts--;
-		System.out.println("Contact deleted");
+		System.out.println("there is no such contact with name "+deletedName);
 	}
 }

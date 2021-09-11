@@ -10,42 +10,48 @@ public class AddressBookMain {
 	}
 
 	public static void menu(AddressBookArray addressBooks) {
-
-		Scanner s = new Scanner(System.in);
+		AddressBookImpl addressOperation = new AddressBookImpl();
+		Scanner scanner = new Scanner(System.in);
 		for (;;) {
 			System.out.println(
-					"1.create new address book\n2.edit existing address book\n3.show address books\n4.search\n5.exit");
+					"1.create new address book\n2.edit existing address book\n3.show address books\n4.search\n5.show person by city\n6.show person by state\n7.exit");
 
-			int choice = s.nextInt();
+			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
 				addressBooks.addAddressBooks();
 				break;
 			case 2:
 				System.out.println("enter Contact book name");
-				addressBookName = s.next();
+				addressBookName = scanner.next();
 				if (addressBooks.selectAddressBook(addressBookName) != null)
-					contactsMenu(addressBooks);
+					contactsMenu(addressBooks, addressOperation);
 				break;
 			case 3:
 				addressBooks.showAddressBook();
 				break;
 			case 4:
 				System.out.println("enter first name");
-				String firstName=s.next();
+				String firstName = scanner.next();
 				System.out.println("press 1 to search by state or 2 to search by city");
-				int searchChoice=s.nextInt();
-				if(searchChoice==1) {
+				int searchChoice = scanner.nextInt();
+				if (searchChoice == 1) {
 					System.out.println("enter state name");
-					String state=s.next();
+					String state = scanner.next();
 					addressBooks.searchByState(firstName, state);
-				}
-				else if(searchChoice==2) {
+				} else if (searchChoice == 2) {
 					System.out.println("enter city name");
-					String city=s.next();
+					String city = scanner.next();
 					addressBooks.searchByCity(firstName, city);
 				}
 				break;
+			case 5:
+				addressOperation.showPersonList(addressOperation.personBasedOnCity);
+				break;
+			case 6:
+				addressOperation.showPersonList(addressOperation.personBasedOnState);
+				break;
+
 			default:
 				return;
 			}
@@ -53,11 +59,11 @@ public class AddressBookMain {
 
 	}
 
-	public static void contactsMenu(AddressBookArray addressBooks) {
-		AddressBookImpl addressOperation = new AddressBookImpl();
-		Scanner s = new Scanner(System.in);
+	public static void contactsMenu(AddressBookArray addressBooks, AddressBookImpl addressOperation) {
+
+		Scanner scanner = new Scanner(System.in);
 		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.exit");
-		int choice = s.nextInt();
+		int choice = scanner.nextInt();
 
 		switch (choice) {
 		case 1:

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,9 @@ public class AddressBook {
 
 	public Map<String, Contact> getAddressBook() {
 		return addressBook;
+	}
+	public ArrayList<Contact> getContact() {
+		return new ArrayList<Contact>(addressBook.values());
 	}
 
 }

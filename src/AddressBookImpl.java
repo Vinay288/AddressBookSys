@@ -29,7 +29,12 @@ public class AddressBookImpl implements AddressBookIf {
 		System.out.println("Enter email");
 		String email = s.next();
 		Contact contact = new Contact(firstName, lastName, address, state, city, zip, phoneNumber, email);
+		if(contact.equals(contactHashMap)) {
+			System.out.println("there is already a student with name "+firstName);
+			return;
+		}
 		contactHashMap.put(firstName, contact);
+		System.out.println("student added");
 	}
 
 	@Override
@@ -59,6 +64,8 @@ public class AddressBookImpl implements AddressBookIf {
 			System.out.println("Enter new First Name");
 			String newFName = s.next();
 			editContact.setFirstName(newFName);
+			contactHashMap.remove(editName);
+			contactHashMap.put(newFName, editContact);
 			System.out.println("Edited");
 			break;
 		case 2:
@@ -112,4 +119,13 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 		System.out.println("there is no such contact with name " + deletedName);
 	}
+	
+//	@Override
+//	public boolean equals(Object anotherObject) {
+//		HashMap<String, Contact> addressBook=(HashMap<String, Contact>) anotherObject;
+//		if(addressBook.containsKey(this)) {
+//			return true;
+//		}
+//		return false;
+//	}
 }

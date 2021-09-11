@@ -1,33 +1,38 @@
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
 	private AddressBookImpl addressBookArray[];
+	private AddressBookImpl addressBook;
+	private Map<String, AddressBookImpl> addressBooks;
 	private int bookNumber = -1;
 	private static int numberOfAddressBooks = 0;
 	Scanner s = new Scanner(System.in);
+
 	AddressBook() {
-		addressBookArray = new AddressBookImpl[10];
+		addressBooks = new HashMap<String, AddressBookImpl>();
 	}
 
 	public void addAddressBooks() {
 		System.out.println("enter address book name");
 		String name = s.next();
 		int index = 0;
-		for (index = 0; index < numberOfAddressBooks; index++) {
-			if (addressBookArray[index].getAddressBookName().equals(name)) {
-				System.out.println("this contact book alredy exists");
-
-			}
+		if (addressBooks.containsKey(name)) {
+			System.out.println(name + " this addres book alredy exists");
+			return;
 		}
-		addressBookArray[numberOfAddressBooks] = new AddressBookImpl(name);
-		System.out.println("address book has been added");
-		numberOfAddressBooks++;
+		System.out.println(name + " this contact book is created");
+		addressBooks.put(name, new AddressBookImpl(name));
 	}
 
 	public void showAddressBook() {
-		for (int i = 0; i < numberOfAddressBooks; i++) {
-			System.out.println(addressBookArray[i].getAddressBookName());
+		System.out.println(" address books are as follows");
+		for (String bookName : addressBooks.keySet()) {
+			System.out.println(bookName);
 		}
 	}
 
@@ -35,33 +40,27 @@ public class AddressBook {
 		System.out.println("enter Contact book name");
 		String name = s.next();
 		int index = 0;
-		for (index = 0; index < numberOfAddressBooks; index++) {
-			if (addressBookArray[index].getAddressBookName().equals(name)) {
-				bookNumber = index;
-				break;
-			} else
-				continue;
+		if (addressBooks.containsKey(name)) {
+			addressBook = addressBooks.get(name);
+			return 1;
 		}
-		if (bookNumber == -1) {
-			System.out.println("no such contact book");
-			return -1;
-		}
-		return 1;
+		System.out.println("no such contact book");
+		return -1;
 	}
 
 	public void addContact() {
-		addressBookArray[bookNumber].addContact();
+		addressBook.addContact();
 	}
 
 	public void editContact() {
-		addressBookArray[bookNumber].editContact();
+		addressBook.editContact();
 	}
 
 	public void showContacts() {
-		addressBookArray[bookNumber].showContacts();
+		addressBook.showContacts();
 	}
 
 	public void deleteContact() {
-		addressBookArray[bookNumber].deleteContact();
+		addressBook.deleteContact();
 	}
 }

@@ -1,7 +1,6 @@
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ public class AddressBookArray {
 	
 	private AddressBook addressBook;
 	private Map<String, AddressBook> addressBooksArray;
-	Scanner s = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
 	
 	AddressBookArray() {
 		addressBooksArray = new HashMap<String, AddressBook>();
@@ -17,8 +16,7 @@ public class AddressBookArray {
 
 	public void addAddressBooks() {
 		System.out.println("enter address book name");
-		String name = s.next();
-		int index = 0;
+		String name = scanner.next();
 		if (addressBooksArray.containsKey(name)) {
 			System.out.println(name + " this address book alredy exists");
 			return;

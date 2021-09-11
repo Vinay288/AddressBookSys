@@ -1,27 +1,16 @@
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AddressBookImpl implements AddressBookIf{
+public class AddressBookImpl implements AddressBookIf {
 
 	Scanner s = new Scanner(System.in);
-	private Map<String,Contact> addressBook;
-	private String addressBookName;
 	private Contact editContact;
 
-	AddressBookImpl(String addressBookName) {
-		addressBook = new HashMap<String, Contact>();
-		this.addressBookName = addressBookName;
-	}
-
-	public String getAddressBookName() {
-		return this.addressBookName;
-	}
-	
 	@Override
-	public void addContact() {
+	public void addContact(HashMap<String, Contact> contactHashMap) {
 		System.out.println("Add Contact");
 		System.out.println("Enter first name:");
 		String firstName = s.next();
@@ -40,17 +29,17 @@ public class AddressBookImpl implements AddressBookIf{
 		System.out.println("Enter email");
 		String email = s.next();
 		Contact contact = new Contact(firstName, lastName, address, state, city, zip, phoneNumber, email);
-		addressBook.put(firstName,contact );
+		contactHashMap.put(firstName, contact);
 	}
 
 	@Override
-	public void showContacts() {
-		for(Contact contact:addressBook.values())
+	public void showContacts(HashMap<String, Contact> contactHashMap) {
+		for (Contact contact : contactHashMap.values())
 			System.out.println(contact);
 	}
 
 	@Override
-	public void editContact() {
+	public void editContact(HashMap<String, Contact> contactHashMap) {
 		System.out.println("Edit contact:");
 		System.out.println("Select Option:\n1.First Name\n2.Last Name\n3.City\n4.State\n5.Zip Code\n6.Phone\n7.Email");
 		int choice = s.nextInt();
@@ -58,14 +47,13 @@ public class AddressBookImpl implements AddressBookIf{
 		String editName = s.next();
 		int index = 0;
 
-		if(!addressBook.containsKey(editName)) {
+		if (!contactHashMap.containsKey(editName)) {
 			System.out.println("no such conatact found");
 			return;
+		} else {
+			editContact = contactHashMap.get(editName);
 		}
-		else {
-			editContact=addressBook.get(editName);
-		}
-			
+
 		switch (choice) {
 		case 1:
 			System.out.println("Enter new First Name");
@@ -113,15 +101,15 @@ public class AddressBookImpl implements AddressBookIf{
 	}
 
 	@Override
-	public void deleteContact() {
+	public void deleteContact(HashMap<String, Contact> contactHashMap) {
 		System.out.println("Enter Name of Contact to delete");
 		String deletedName = s.next();
-		
-		if(addressBook.containsKey(deletedName)) {
-			addressBook.remove(deletedName);
-			System.out.println("deleted "+deletedName);
+
+		if (contactHashMap.containsKey(deletedName)) {
+			contactHashMap.remove(deletedName);
+			System.out.println("deleted " + deletedName);
 			return;
 		}
-		System.out.println("there is no such contact with name "+deletedName);
+		System.out.println("there is no such contact with name " + deletedName);
 	}
 }

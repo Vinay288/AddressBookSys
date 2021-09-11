@@ -14,7 +14,7 @@ public class AddressBookMain {
 		Scanner scanner = new Scanner(System.in);
 		for (;;) {
 			System.out.println(
-					"1.create new address book\n2.edit existing address book\n3.show address books\n4.search\n5.show person by city\n6.show person by state\n7.exit");
+					"1.create new address book\n2.edit existing address book\n3.show address books\n4.search\n5.show person by city\n6.show person by state\n7.count\n8.exit");
 
 			int choice = scanner.nextInt();
 			switch (choice) {
@@ -51,8 +51,11 @@ public class AddressBookMain {
 			case 6:
 				addressOperation.showPersonList(addressOperation.personBasedOnState);
 				break;
-
+			case 7:
+				addressOperation.showCountofContactPersons();
+				break;
 			default:
+				System.out.println("BYE!!");
 				return;
 			}
 		}

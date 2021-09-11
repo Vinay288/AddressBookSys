@@ -42,6 +42,7 @@ public class AddressBookArray {
 		System.out.println("no such contact book");
 		return null;
 	}
+	
 	public void searchByState(String name, String state) {
 		for(AddressBook addressBook:addressBooksArray.values()) {
 			for(Contact contact:addressBook.getContact()) {
@@ -52,6 +53,7 @@ public class AddressBookArray {
 			}
 		}
 	}
+	
 	public void searchByCity(String name, String city) {
 		for(AddressBook addressBook:addressBooksArray.values()) {
 			for(Contact contact:addressBook.getContact()) {

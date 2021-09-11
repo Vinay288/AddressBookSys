@@ -42,4 +42,24 @@ public class AddressBookArray {
 		System.out.println("no such contact book");
 		return null;
 	}
+	public void searchByState(String name, String state) {
+		for(AddressBook addressBook:addressBooksArray.values()) {
+			for(Contact contact:addressBook.getContact()) {
+				if(contact.getFirstName().equals(name) && contact.getState().equals(state)) {
+					System.out.println(name+" is found ");
+					System.out.println(contact);
+				}
+			}
+		}
+	}
+	public void searchByCity(String name, String city) {
+		for(AddressBook addressBook:addressBooksArray.values()) {
+			for(Contact contact:addressBook.getContact()) {
+				if(contact.getFirstName().equals(name) && contact.getCity().equals(city)) {
+					System.out.println(name+" is found ");
+					System.out.println(contact);
+				}
+			}
+		}
+	}
 }

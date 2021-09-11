@@ -4,12 +4,13 @@ public class AddressBookMain {
 
 	public static void main(String[] args) {
 		System.out.println("Welcome to Address Book Program");
-		AddressBook addressBooks = new AddressBook();
-
+		AddressBookArray addressBooks = new AddressBookArray();
 		menu(addressBooks);
 	}
 
-	public static void menu(AddressBook addressBooks) {
+	public static void menu(AddressBookArray addressBooks) {
+		AddressBookImpl addressOperation = new AddressBookImpl();
+		String addressBookName = "";
 		Scanner s = new Scanner(System.in);
 		for (;;) {
 			for (;;) {
@@ -20,11 +21,14 @@ public class AddressBookMain {
 				if (choice == 1) {
 					addressBooks.addAddressBooks();
 				} else if (choice == 2) {
-					if (addressBooks.selectAddressBook() == 1)
+					System.out.println("enter Contact book name");
+					addressBookName = s.next();
+					if (addressBooks.selectAddressBook(addressBookName) != null)
 						break;
 				} else if (choice == 3) {
 					addressBooks.showAddressBook();
 				} else {
+					System.out.println("Bye!!");
 					return;
 				}
 			}
@@ -36,16 +40,16 @@ public class AddressBookMain {
 
 			switch (choice) {
 			case 1:
-				addressBooks.addContact();
+				addressOperation.addContact(addressBooks.selectAddressBook(addressBookName).addressBook);
 				break;
 			case 2:
-				addressBooks.showContacts();
+				addressOperation.showContacts(addressBooks.selectAddressBook(addressBookName).addressBook);
 				break;
 			case 3:
-				addressBooks.editContact();
+				addressOperation.editContact(addressBooks.selectAddressBook(addressBookName).addressBook);
 				break;
 			case 4:
-				addressBooks.deleteContact();
+				addressOperation.deleteContact(addressBooks.selectAddressBook(addressBookName).addressBook);
 				break;
 			}
 

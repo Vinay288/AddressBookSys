@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 public class Contact {
 	private String firstName, lastName, address, city, state, email;
@@ -78,11 +79,20 @@ public class Contact {
 	public void setEmailId(String email) {
 		this.email = email;
 	}
+	
+	@Override
+	public boolean equals(Object anotherObject) {
+		HashMap<String, Contact> addressBook=(HashMap<String, Contact>) anotherObject;
+		if(addressBook.containsKey(this.getFirstName())) {
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {
-		return getFirstName() + "\n" + getLastName() + "\n" + getAddress() + "\n" + getPhoneNumber() + "\n"
-				+ getEmailId();
+		return "First Name: "+getFirstName() + "\n" + "Last Name: "+getLastName() + "\n" + "Address: "+getAddress() + "\n" +"Phone Number: "+ getPhoneNumber() + "\n"
+				+ "Email: "+getEmailId();
 	}
 
 }

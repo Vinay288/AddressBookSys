@@ -28,9 +28,9 @@ public class AddressBookImpl implements AddressBookIf {
 		int phoneNumber = s.nextInt();
 		System.out.println("Enter email");
 		String email = s.next();
-		Contact contact = new Contact(firstName, lastName, address, state, city, zip, phoneNumber, email);
-		if(contact.equals(contactHashMap)) {
-			System.out.println("there is already a student with name "+firstName);
+		Contact contact = new Contact(firstName, lastName, city, address, state, zip, phoneNumber, email);
+		if (contact.equals(contactHashMap)) {
+			System.out.println("there is already a student with name " + firstName);
 			return;
 		}
 		contactHashMap.put(firstName, contact);
@@ -119,13 +119,5 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 		System.out.println("there is no such contact with name " + deletedName);
 	}
-	
-//	@Override
-//	public boolean equals(Object anotherObject) {
-//		HashMap<String, Contact> addressBook=(HashMap<String, Contact>) anotherObject;
-//		if(addressBook.containsKey(this)) {
-//			return true;
-//		}
-//		return false;
-//	}
+
 }

@@ -5,62 +5,41 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class AddressBook {
-	private AddressBookImpl addressBookArray[];
-	private AddressBookImpl addressBook;
-	private Map<String, AddressBookImpl> addressBooks;
-	private int bookNumber = -1;
-	private static int numberOfAddressBooks = 0;
+public class AddressBookArray {
+	
+	private AddressBook addressBook;
+	private Map<String, AddressBook> addressBooksArray;
 	Scanner s = new Scanner(System.in);
-
-	AddressBook() {
-		addressBooks = new HashMap<String, AddressBookImpl>();
+	
+	AddressBookArray() {
+		addressBooksArray = new HashMap<String, AddressBook>();
 	}
 
 	public void addAddressBooks() {
 		System.out.println("enter address book name");
 		String name = s.next();
 		int index = 0;
-		if (addressBooks.containsKey(name)) {
-			System.out.println(name + " this addres book alredy exists");
+		if (addressBooksArray.containsKey(name)) {
+			System.out.println(name + " this address book alredy exists");
 			return;
 		}
 		System.out.println(name + " this contact book is created");
-		addressBooks.put(name, new AddressBookImpl(name));
+		addressBooksArray.put(name, new AddressBook(name));
 	}
 
 	public void showAddressBook() {
 		System.out.println(" address books are as follows");
-		for (String bookName : addressBooks.keySet()) {
+		for (String bookName : addressBooksArray.keySet()) {
 			System.out.println(bookName);
 		}
 	}
 
-	public int selectAddressBook() {
-		System.out.println("enter Contact book name");
-		String name = s.next();
-		int index = 0;
-		if (addressBooks.containsKey(name)) {
-			addressBook = addressBooks.get(name);
-			return 1;
+	public AddressBook selectAddressBook(String name) {	
+		if (addressBooksArray.containsKey(name)) {
+			addressBook = addressBooksArray.get(name);
+			return addressBook;
 		}
 		System.out.println("no such contact book");
-		return -1;
-	}
-
-	public void addContact() {
-		addressBook.addContact();
-	}
-
-	public void editContact() {
-		addressBook.editContact();
-	}
-
-	public void showContacts() {
-		addressBook.showContacts();
-	}
-
-	public void deleteContact() {
-		addressBook.deleteContact();
+		return null;
 	}
 }

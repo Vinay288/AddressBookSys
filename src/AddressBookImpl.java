@@ -158,4 +158,15 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 
 	}
+
+	public void showCountofContactPersons() {
+		System.out.println("number of contact persons by state");
+		for (String name : personBasedOnState.keySet()) {
+			System.out.println("for state " + name + " count is " + personBasedOnState.get(name).size());
+		}
+		System.out.println("number of contact persons by city is");
+		for (String name : personBasedOnCity.keySet()) {
+			System.out.println("for city " + name + " count is " + personBasedOnCity.get(name).size());
+		}
+	}
 }

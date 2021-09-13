@@ -147,26 +147,29 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 	}
 
-	public void showPersonList(HashMap<String, ArrayList<Contact>> personList) {
+	public void showPersonList(String inputName, HashMap<String, ArrayList<Contact>> personList) {
 		ArrayList<Contact> personArrayList;
 		for (String name : personList.keySet()) {
-			System.out.println("for " + name);
-			personArrayList = personList.get(name);
-			for (Contact contact : personArrayList) {
-				System.out.println(contact);
+			if (inputName.equals(name)) {
+				System.out.println("persons in " + inputName + " are:");
+				personArrayList = personList.get(name);
+				for (Contact contact : personArrayList) {
+					System.out.println(contact);
+				}
+				return;
 			}
 		}
-
+		System.out.println("no contacts from given city/state found");
 	}
 
-	public void showCountofContactPersons() {
-		System.out.println("number of contact persons by state");
-		for (String name : personBasedOnState.keySet()) {
-			System.out.println("for state " + name + " count is " + personBasedOnState.get(name).size());
+	public void countofContactPersons(String inputName,HashMap<String, ArrayList<Contact>> personList) {
+		System.out.println("number of contact persons in "+inputName+" are:");
+		for (String name : personList.keySet()) {
+			if(name.equals(inputName)) {
+			System.out.println("for state " + name + " count is " + personList.get(name).size());
+			return;
+			}
 		}
-		System.out.println("number of contact persons by city is");
-		for (String name : personBasedOnCity.keySet()) {
-			System.out.println("for city " + name + " count is " + personBasedOnCity.get(name).size());
-		}
+		System.out.println("0 conatcts found");
 	}
 }

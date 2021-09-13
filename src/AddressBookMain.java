@@ -48,22 +48,22 @@ public class AddressBookMain {
 			case 5:
 				System.out.println("enter city name");
 				String city = scanner.next();
-				addressOperation.showPersonList(city,addressOperation.personBasedOnCity);
+				addressOperation.showPersonList(city, addressOperation.personBasedOnCity);
 				break;
 			case 6:
 				System.out.println("enter state name");
 				String state = scanner.next();
-				addressOperation.showPersonList(state,addressOperation.personBasedOnState);
+				addressOperation.showPersonList(state, addressOperation.personBasedOnState);
 				break;
 			case 7:
 				System.out.println("enter city name");
-				 city = scanner.next();
-				addressOperation.countofContactPersons(city,addressOperation.personBasedOnCity);
+				city = scanner.next();
+				addressOperation.countofContactPersons(city, addressOperation.personBasedOnCity);
 				break;
 			case 8:
 				System.out.println("enter state name");
 				state = scanner.next();
-				addressOperation.countofContactPersons(state,addressOperation.personBasedOnState);
+				addressOperation.countofContactPersons(state, addressOperation.personBasedOnState);
 				break;
 			default:
 				System.out.println("BYE!!");

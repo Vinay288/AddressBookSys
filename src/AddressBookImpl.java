@@ -162,12 +162,12 @@ public class AddressBookImpl implements AddressBookIf {
 		System.out.println("no contacts from given city/state found");
 	}
 
-	public void countofContactPersons(String inputName,HashMap<String, ArrayList<Contact>> personList) {
-		System.out.println("number of contact persons in "+inputName+" are:");
+	public void countofContactPersons(String inputName, HashMap<String, ArrayList<Contact>> personList) {
+		System.out.println("number of contact persons in " + inputName + " are:");
 		for (String name : personList.keySet()) {
-			if(name.equals(inputName)) {
-			System.out.println("for state " + name + " count is " + personList.get(name).size());
-			return;
+			if (name.equals(inputName)) {
+				System.out.println("for state " + name + " count is " + personList.get(name).size());
+				return;
 			}
 		}
 		System.out.println("0 conatcts found");

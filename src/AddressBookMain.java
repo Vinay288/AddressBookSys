@@ -19,6 +19,7 @@ public class AddressBookMain {
 			int choice = scanner.nextInt();
 			switch (choice) {
 			case 1:
+				
 				addressBooks.addAddressBooks();
 				break;
 			case 2:
@@ -76,7 +77,7 @@ public class AddressBookMain {
 	public static void contactsMenu(AddressBookArray addressBooks, AddressBookImpl addressOperation) {
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.exit");
+		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n6.exit");
 		int choice = scanner.nextInt();
 
 		switch (choice) {
@@ -92,6 +93,8 @@ public class AddressBookMain {
 		case 4:
 			addressOperation.deleteContact(addressBooks.selectAddressBook(addressBookName).addressBook);
 			break;
+		case 5:addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook);
+				break;
 		default:
 			return;
 		}

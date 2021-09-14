@@ -148,28 +148,16 @@ public class AddressBookImpl implements AddressBookIf {
 	}
 
 	public void showPersonList(String inputName, HashMap<String, ArrayList<Contact>> personList) {
-		ArrayList<Contact> personArrayList;
-		for (String name : personList.keySet()) {
-			if (inputName.equals(name)) {
-				System.out.println("persons in " + inputName + " are:");
-				personArrayList = personList.get(name);
-				for (Contact contact : personArrayList) {
-					System.out.println(contact);
-				}
-				return;
-			}
-		}
-		System.out.println("no contacts from given city/state found");
+		personList.values().stream()
+				.flatMap(c -> c.stream().filter(s -> s.getCity().equals(inputName) || s.getState().equals(inputName)))
+				.forEach(person -> System.out.println("details are:\n" + person));
 	}
 
 	public void countofContactPersons(String inputName, HashMap<String, ArrayList<Contact>> personList) {
-		System.out.println("number of contact persons in " + inputName + " are:");
-		for (String name : personList.keySet()) {
-			if (name.equals(inputName)) {
-				System.out.println("for state " + name + " count is " + personList.get(name).size());
-				return;
-			}
-		}
-		System.out.println("0 conatcts found");
+		System.out.print("count of contacts persons in " + inputName + " is ");
+				long count= personList.values().stream().map(
+						c -> c.stream().filter(s -> s.getCity().equals(inputName) || s.getState().equals(inputName)))
+						.count();
+				System.out.print(count+"\n");
 	}
 }

@@ -83,10 +83,11 @@ public class Contact {
 	@Override
 	public boolean equals(Object anotherObject) {
 		HashMap<String, Contact> addressBook = (HashMap<String, Contact>) anotherObject;
-		if (addressBook.containsKey(this.getFirstName())) {
+		if (addressBook.keySet().stream().anyMatch(s -> (s.equals(firstName)))) {
 			return true;
 		}
 		return false;
+
 	}
 
 	@Override

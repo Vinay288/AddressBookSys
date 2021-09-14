@@ -1,8 +1,13 @@
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class AddressBookArray {
 	
@@ -42,14 +47,20 @@ public class AddressBookArray {
 	}
 	
 	public void searchByState(String name, String state) {
-		for(AddressBook addressBook:addressBooksArray.values()) {
-			for(Contact contact:addressBook.getContact()) {
-				if(contact.getFirstName().equals(name) && contact.getState().equals(state)) {
-					System.out.println(name+" is found ");
-					System.out.println(contact);
-				}
-			}
-		}
+//		for(AddressBook addressBook:addressBooksArray.values()) {
+//			for(Contact contact:addressBook.getContact()) {
+//				if(contact.getFirstName().equals(name) && contact.getState().equals(state)) {
+//					System.out.println(name+" is found ");
+//					System.out.println(contact);
+//				}
+//			}
+//		}
+		Predicate<Contact> isEqual=c->((c.getFirstName().equals(name))&&(c.getState().equals(state)));
+		List<Contact> listtArrayList= addressBooksArray.values().stream()
+										.flatMap(contactsArray->addressBook.getContact().stream()
+										.filter(isEqual)).peek(n->System.out.println(name+"is found and details are \n"+n)).collect(Collectors.toList());
+										
+//	System.out.println(listtArrayList);
 	}
 	
 	public void searchByCity(String name, String city) {

@@ -1,7 +1,11 @@
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class AddressBookImpl implements AddressBookIf {
 
@@ -159,5 +163,11 @@ public class AddressBookImpl implements AddressBookIf {
 						c -> c.stream().filter(s -> s.getCity().equals(inputName) || s.getState().equals(inputName)))
 						.count();
 				System.out.print(count+"\n");
+	}
+	public void sortContacts(HashMap<String, Contact> addressBook) {
+		ArrayList<Contact> personList=new ArrayList<Contact>(addressBook.values());
+		List<Contact> sortedPersonList=personList.stream().sorted((s1,s2)->s1.getFirstName().compareTo(s2.getFirstName())).collect(Collectors.toList());
+		System.out.println("contacts after sorting ");
+		System.out.println(sortedPersonList);
 	}
 }

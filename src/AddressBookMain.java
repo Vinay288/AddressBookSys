@@ -93,7 +93,18 @@ public class AddressBookMain {
 		case 4:
 			addressOperation.deleteContact(addressBooks.selectAddressBook(addressBookName).addressBook);
 			break;
-		case 5:addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook);
+		case 5:System.out.println("1.by city\n2.by state\n3.by zip");
+		       int sortChoice=scanner.nextInt();
+		       if(sortChoice==1) {
+		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,1);
+		       }
+		       else if(sortChoice==2) {
+		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,2);   
+		       }
+		       else {
+		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,3);
+		       }
+		
 				break;
 		default:
 			return;

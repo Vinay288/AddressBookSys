@@ -1,6 +1,9 @@
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,6 +14,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 public class AddressBookImpl implements AddressBookIf {
 
@@ -218,14 +224,54 @@ public class AddressBookImpl implements AddressBookIf {
 		});
 
 		try {
-			if (Paths.get(name) == null) {
-				String newFile = "src/" + name + ".txt";
-				Files.createFile(Paths.get(newFile));
-			}
 			Files.write(Paths.get(name.concat(".txt")), contactBuffer.toString().getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	public String[] getStringArray(Contact contact) {
+		String stringArray[] = new String[8];
+		stringArray[0]=contact.getFirstName();
+		stringArray[1]=contact.getLastName();
+		stringArray[2]=contact.getCity();
+		stringArray[3]=contact.getAddress();
+		stringArray[4]=contact.getState();
+		stringArray[5]=contact.getEmailId();
+		stringArray[6]=Integer.toString(contact.getZipCode());
+		stringArray[7]=Integer.toString(contact.getPhoneNumber());
+		return stringArray;
+	}
+	public void writeToCsvFile(String name,HashMap<String, Contact> addressBook) {
+		try {
+			CSVWriter writer = new CSVWriter(new FileWriter(name.concat(".csv")));
+			List<String[]> contactsArrayList= new ArrayList();
+			for(Contact contact:addressBook.values()) {
+				contactsArrayList.add(getStringArray(contact));
+			}
+			writer.writeAll(contactsArrayList);
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     
+	}
+	
+	public void readFromCsvFile(String name,HashMap<String, Contact> addressBook) {
+		 try {
+		        FileReader filereader = new FileReader(name+".csv");
+		        CSVReader csvReader = new CSVReader(filereader);
+		        String[] nextRecord;
+		        while ((nextRecord = csvReader.readNext()) != null) {
+		            for (String cell : nextRecord) {
+		                System.out.print(cell + "\t");
+		            }
+		            System.out.println();
+		        }
+		    }
+		    catch (Exception e) {
+		        e.printStackTrace();
+		    }
 	}
 
 	public void readFromFile(String name, HashMap<String, Contact> addressBook) {

@@ -78,7 +78,7 @@ public class AddressBookMain {
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(
-				"1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n7.add to file\n8.read from file\n9.write to csv\n10.read from csv\n11.exit");
+				"1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n7.write service\n8.read service\n9.exit");
 		int choice = scanner.nextInt();
 
 		switch (choice) {
@@ -100,34 +100,34 @@ public class AddressBookMain {
 			addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook, sortChoice);
 			break;
 		case 7:
+			System.out.println("1.CSV\n2.File\n3.JSON");
+			choice = scanner.nextInt();
 			System.out.println("enter file name");
 			String fileName = scanner.next();
-			addressOperation.writeToFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+			if (choice == 1) {
+				addressOperation.writeService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.CSV_IO);
+			} else if (choice == 2)
+				addressOperation.writeService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.FILE_IO);
+			else
+				addressOperation.writeService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.JSON_IO);
 			break;
 		case 8:
+			System.out.println("1.CSV\n2.File\n3.JSON");
+			choice = scanner.nextInt();
 			System.out.println("enter file name");
 			fileName = scanner.next();
-			addressOperation.readFromFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
-			break;
-		case 9:
-			System.out.println("enter file name");
-			fileName = scanner.next();
-			addressOperation.writeToCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
-			break;
-		case 10:
-			System.out.println("enter file name");
-			fileName = scanner.next();
-			addressOperation.readFromCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
-			break;
-		case 11:
-			System.out.println("enter file name");
-			fileName = scanner.next();
-			addressOperation.readFromCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
-			break;
-		case 12:
-			System.out.println("enter file name");
-			fileName = scanner.next();
-			addressOperation.readFromCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+			if (choice == 1) {
+				addressOperation.readService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.CSV_IO);
+			} else if (choice == 2)
+				addressOperation.readService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.FILE_IO);
+			else
+				addressOperation.readService(fileName, addressBooks.selectAddressBook(addressBookName).addressBook,
+						IOService.JSON_IO);
 			break;
 
 		default:

@@ -77,7 +77,7 @@ public class AddressBookMain {
 	public static void contactsMenu(AddressBookArray addressBooks, AddressBookImpl addressOperation) {
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n6.exit");
+		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n7.add to file\n8.read from file\n9.exit");
 		int choice = scanner.nextInt();
 
 		switch (choice) {
@@ -95,17 +95,18 @@ public class AddressBookMain {
 			break;
 		case 5:System.out.println("1.by city\n2.by state\n3.by zip");
 		       int sortChoice=scanner.nextInt();
-		       if(sortChoice==1) {
-		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,1);
-		       }
-		       else if(sortChoice==2) {
-		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,2);   
-		       }
-		       else {
-		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,3);
-		       }
-		
+		    	   addressOperation.sortContacts(addressBooks.selectAddressBook(addressBookName).addressBook,sortChoice);
 				break;
+		case 7: 
+			System.out.println("enter file name");
+			String fileName=scanner.next();
+			addressOperation.writeToFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+			break;
+		case 8: 
+			System.out.println("enter file name");
+			fileName=scanner.next();
+			addressOperation.readFromFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+			break;
 		default:
 			return;
 		}

@@ -1,5 +1,7 @@
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -287,21 +290,48 @@ public class AddressBookImpl implements AddressBookIf {
 
 	}
 
-	public void writeToJson(String name, HashMap<String, Contact> addressBook) {
+	public void writeToJson(String name, HashMap<String, Contact> addressBook) throws IOException {
 		Gson gson = new Gson();
 		String json = gson.toJson(addressBook);
 		FileWriter writer = new FileWriter(name.concat(".json"));
 		writer.write(json);
 	}
 
-	public void readFromJson(String name, HashMap<String, Contact> addressBook) {
+	public void readFromJson(String name, HashMap<String, Contact> addressBook) throws FileNotFoundException {
 		Gson gson = new Gson();
 		BufferedReader br = new BufferedReader(new FileReader(name));
 		Contact[] contactsFile = gson.fromJson(br, Contact[].class);
 		List<Contact> addressbook = Arrays.asList(contactsFile);
 		System.out.println(addressbook);
 	}
-	public writeService(String name, HashMap<String, Contact> addressBook,IOService ioService) {
-		
+
+	public void writeService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
+		if (ioService == IOService.CSV_IO)
+			writeToCsvFile(name, addressBook);
+		else if (ioService == IOService.FILE_IO)
+			writeToFile(name, addressBook);
+		else if (ioService == IOService.JSON_IO) {
+			try {
+				writeToJson(name, addressBook);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void readService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
+		if (ioService == IOService.CSV_IO)
+			readFromCsvFile(name, addressBook);
+		else if (ioService == IOService.FILE_IO)
+			readFromFile(name, addressBook);
+		else if (ioService == IOService.JSON_IO) {
+			try {
+				readFromJson(name, addressBook);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

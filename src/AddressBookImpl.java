@@ -1,4 +1,9 @@
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -201,6 +206,35 @@ public class AddressBookImpl implements AddressBookIf {
 			break;
 		default:
 			break;
+		}
+
+	}
+
+	public void writeToFile(String name, HashMap<String, Contact> addressBook) {
+		StringBuffer contactBuffer = new StringBuffer();
+		addressBook.values().forEach(contact -> {
+			String contactString = contact.toString().concat("\n");
+			contactBuffer.append(contactString);
+		});
+
+		try {
+			if (Paths.get(name) == null) {
+				String newFile = "src/" + name + ".txt";
+				Files.createFile(Paths.get(newFile));
+			}
+			Files.write(Paths.get(name.concat(".txt")), contactBuffer.toString().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readFromFile(String name, HashMap<String, Contact> addressBook) {
+		List<Contact> listOfContacts = new ArrayList<Contact>();
+		try {
+			String newFile = "src/" + name + ".txt";
+			Files.lines(Paths.get(name.concat(".txt"))).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

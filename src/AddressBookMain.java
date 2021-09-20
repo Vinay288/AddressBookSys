@@ -77,7 +77,7 @@ public class AddressBookMain {
 	public static void contactsMenu(AddressBookArray addressBooks, AddressBookImpl addressOperation) {
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n7.add to file\n8.read from file\n9.exit");
+		System.out.println("1.add contact\n2.show contact\n3.edit contact\n4.delete\n5.sort contacts\n7.add to file\n8.read from file\n9.write to csv\n10.read from csv\n11.exit");
 		int choice = scanner.nextInt();
 
 		switch (choice) {
@@ -107,6 +107,15 @@ public class AddressBookMain {
 			fileName=scanner.next();
 			addressOperation.readFromFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
 			break;
+		case 9:System.out.println("enter file name");
+		fileName=scanner.next();
+		addressOperation.writeToCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+		break;
+		case 10:System.out.println("enter file name");
+		fileName=scanner.next();
+		addressOperation.readFromCsvFile(fileName, addressBooks.selectAddressBook(addressBookName).addressBook);
+		break;
+			
 		default:
 			return;
 		}

@@ -15,6 +15,7 @@ import java.util.Scanner;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -229,23 +230,25 @@ public class AddressBookImpl implements AddressBookIf {
 			e.printStackTrace();
 		}
 	}
+
 	public String[] getStringArray(Contact contact) {
 		String stringArray[] = new String[8];
-		stringArray[0]=contact.getFirstName();
-		stringArray[1]=contact.getLastName();
-		stringArray[2]=contact.getCity();
-		stringArray[3]=contact.getAddress();
-		stringArray[4]=contact.getState();
-		stringArray[5]=contact.getEmailId();
-		stringArray[6]=Integer.toString(contact.getZipCode());
-		stringArray[7]=Integer.toString(contact.getPhoneNumber());
+		stringArray[0] = contact.getFirstName();
+		stringArray[1] = contact.getLastName();
+		stringArray[2] = contact.getCity();
+		stringArray[3] = contact.getAddress();
+		stringArray[4] = contact.getState();
+		stringArray[5] = contact.getEmailId();
+		stringArray[6] = Integer.toString(contact.getZipCode());
+		stringArray[7] = Integer.toString(contact.getPhoneNumber());
 		return stringArray;
 	}
-	public void writeToCsvFile(String name,HashMap<String, Contact> addressBook) {
+
+	public void writeToCsvFile(String name, HashMap<String, Contact> addressBook) {
 		try {
 			CSVWriter writer = new CSVWriter(new FileWriter(name.concat(".csv")));
-			List<String[]> contactsArrayList= new ArrayList();
-			for(Contact contact:addressBook.values()) {
+			List<String[]> contactsArrayList = new ArrayList();
+			for (Contact contact : addressBook.values()) {
 				contactsArrayList.add(getStringArray(contact));
 			}
 			writer.writeAll(contactsArrayList);
@@ -254,24 +257,23 @@ public class AddressBookImpl implements AddressBookIf {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	     
+
 	}
-	
-	public void readFromCsvFile(String name,HashMap<String, Contact> addressBook) {
-		 try {
-		        FileReader filereader = new FileReader(name+".csv");
-		        CSVReader csvReader = new CSVReader(filereader);
-		        String[] nextRecord;
-		        while ((nextRecord = csvReader.readNext()) != null) {
-		            for (String cell : nextRecord) {
-		                System.out.print(cell + "\t");
-		            }
-		            System.out.println();
-		        }
-		    }
-		    catch (Exception e) {
-		        e.printStackTrace();
-		    }
+
+	public void readFromCsvFile(String name, HashMap<String, Contact> addressBook) {
+		try {
+			FileReader filereader = new FileReader(name + ".csv");
+			CSVReader csvReader = new CSVReader(filereader);
+			String[] nextRecord;
+			while ((nextRecord = csvReader.readNext()) != null) {
+				for (String cell : nextRecord) {
+					System.out.print(cell + "\t");
+				}
+				System.out.println();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void readFromFile(String name, HashMap<String, Contact> addressBook) {
@@ -283,5 +285,23 @@ public class AddressBookImpl implements AddressBookIf {
 			e.printStackTrace();
 		}
 
+	}
+
+	public void writeToJson(String name, HashMap<String, Contact> addressBook) {
+		Gson gson = new Gson();
+		String json = gson.toJson(addressBook);
+		FileWriter writer = new FileWriter(name.concat(".json"));
+		writer.write(json);
+	}
+
+	public void readFromJson(String name, HashMap<String, Contact> addressBook) {
+		Gson gson = new Gson();
+		BufferedReader br = new BufferedReader(new FileReader(name));
+		Contact[] contactsFile = gson.fromJson(br, Contact[].class);
+		List<Contact> addressbook = Arrays.asList(contactsFile);
+		System.out.println(addressbook);
+	}
+	public writeService(String name, HashMap<String, Contact> addressBook,IOService ioService) {
+		
 	}
 }

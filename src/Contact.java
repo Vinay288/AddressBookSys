@@ -1,9 +1,25 @@
 import java.util.HashMap;
 
-public class Contact {
-	private String firstName, lastName, address, city, state, email;
-	private int zip, phoneNumber;
+import com.opencsv.bean.CsvBindByName;
 
+public class Contact {
+	
+	@CsvBindByName
+	private String firstName;
+	@CsvBindByName
+	private String lastName;
+	@CsvBindByName
+	private String address;
+	@CsvBindByName
+	private String city;
+	@CsvBindByName
+	private String state;
+	@CsvBindByName
+	private int zip;
+	@CsvBindByName
+	private int phoneNumber;
+	@CsvBindByName
+	private String email;
 	Contact(String firstName, String lastName, String city, String address, String state, int zip, int phoneNumber,
 			String email) {
 		this.firstName = firstName;

@@ -1,11 +1,26 @@
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 
 public class AddressBookImpl implements AddressBookIf {
 
@@ -203,5 +218,127 @@ public class AddressBookImpl implements AddressBookIf {
 			break;
 		}
 
+	}
+
+	public void writeToFile(String name, HashMap<String, Contact> addressBook) {
+		StringBuffer contactBuffer = new StringBuffer();
+		addressBook.values().forEach(contact -> {
+			String contactString = contact.toString().concat("\n");
+			contactBuffer.append(contactString);
+		});
+
+		try {
+			Files.write(Paths.get(name.concat(".txt")), contactBuffer.toString().getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String[] getStringArray(Contact contact) {
+		String stringArray[] = new String[8];
+		stringArray[0] = contact.getFirstName();
+		stringArray[1] = contact.getLastName();
+		stringArray[2] = contact.getCity();
+		stringArray[3] = contact.getAddress();
+		stringArray[4] = contact.getState();
+		stringArray[5] = contact.getEmailId();
+		stringArray[6] = Integer.toString(contact.getZipCode());
+		stringArray[7] = Integer.toString(contact.getPhoneNumber());
+		return stringArray;
+	}
+
+	public void writeToCsvFile(String name, HashMap<String, Contact> addressBook) {
+		try {
+			CSVWriter writer = new CSVWriter(new FileWriter(name.concat(".csv")));
+			List<String[]> contactsArrayList = new ArrayList();
+			for (Contact contact : addressBook.values()) {
+				contactsArrayList.add(getStringArray(contact));
+			}
+			writer.writeAll(contactsArrayList);
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void readFromCsvFile(String name, HashMap<String, Contact> addressBook) {
+		try {
+			FileReader filereader = new FileReader(name + ".csv");
+			CSVReader csvReader = new CSVReader(filereader);
+			String[] nextRecord;
+			while ((nextRecord = csvReader.readNext()) != null) {
+				for (String cell : nextRecord) {
+					System.out.print(cell + "\t");
+				}
+				System.out.println();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void readFromFile(String name, HashMap<String, Contact> addressBook) {
+		List<Contact> listOfContacts = new ArrayList<Contact>();
+		try {
+			String newFile = "src/" + name + ".txt";
+			Files.lines(Paths.get(name.concat(".txt"))).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void writeToJson(String name, HashMap<String, Contact> addressBook) throws IOException {
+		Gson gson = new Gson();
+		String json = gson.toJson(addressBook);
+		FileWriter writer = new FileWriter(name.concat(".json"));
+		writer.write(json);
+		writer.close();
+	}
+
+	public void readFromJson(String name, HashMap<String, Contact> addressBook) throws FileNotFoundException {
+		Gson gson = new Gson();
+		BufferedReader br = new BufferedReader(new FileReader(name.concat(".json")));
+		Contact[] contactsFile = gson.fromJson(br, Contact[].class);
+		List<Contact> addressbook = Arrays.asList(contactsFile);
+		System.out.println(addressbook);
+	}
+
+	public void writeService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
+		if (ioService == IOService.CSV_IO)
+			writeToCsvFile(name, addressBook);
+		else if (ioService == IOService.FILE_IO)
+			writeToFile(name, addressBook);
+		else if (ioService == IOService.JSON_IO) {
+			try {
+				writeToJson(name, addressBook);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	public int readDb(String addressBookName) {
+		List<Contact> contacts=(new AddressBookDBService()).readContacts(addressBookName);
+		return contacts.size();
+	}
+	public void writeAddressBookDB(Contact contact,String addressBookName) {
+		(new AddressBookDBService()).writeAddressBookDB(contact,addressBookName);
+	}
+
+	public void readService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
+		if (ioService == IOService.CSV_IO)
+			readFromCsvFile(name, addressBook);
+		else if (ioService == IOService.FILE_IO)
+			readFromFile(name, addressBook);
+		else if (ioService == IOService.JSON_IO) {
+			try {
+				readFromJson(name, addressBook);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

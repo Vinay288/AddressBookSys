@@ -3,7 +3,27 @@ import java.util.HashMap;
 import com.opencsv.bean.CsvBindByName;
 
 public class Contact {
-	
+	public int getContactId() {
+		return contactId;
+	}
+	public void setContactId(int contactId) {
+		this.contactId = contactId;
+	}
+	public int getZip() {
+		return zip;
+	}
+	public void setZip(int zip) {
+		this.zip = zip;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	@CsvBindByName
+	private int contactId;
 	@CsvBindByName
 	private String firstName;
 	@CsvBindByName
@@ -20,16 +40,31 @@ public class Contact {
 	private int phoneNumber;
 	@CsvBindByName
 	private String email;
+	Place place;
 	Contact(String firstName, String lastName, String city, String address, String state, int zip, int phoneNumber,
 			String email) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+		place=new Place(city, zip, state);
+	}
+	public Place getPlace() {
+		return place;
+	}
+	public void setPlace(Place place) {
+		this.place = place;
+	}
+	Contact(Integer contactId,String firstName, String lastName, String city, String address, String state, int zip, int phoneNumber,
+			String email ,Integer placeId) {
+		this.contactId=contactId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.email = email;
+		place=new Place(placeId,city,zip,state);
 	}
 
 	public String getFirstName() {
@@ -57,27 +92,27 @@ public class Contact {
 	}
 
 	public String getCity() {
-		return city;
+		return getPlace().getCity();
 	}
 
 	public void setState(String state) {
-		this.state = state;
+		this.getPlace().setState(state);
 	}
 
 	public String getState() {
-		return state;
+		return getPlace().getState();
 	}
 
 	public void setCity(String city) {
-		this.city = city;
+		this.getPlace().setCity(city);
 	}
 
 	public int getZipCode() {
-		return zip;
+		return getPlace().getZip();
 	}
 
 	public void setZipCode(int zip) {
-		this.zip = zip;
+		this.getPlace().setZip(zip); 
 	}
 
 	public int getPhoneNumber() {

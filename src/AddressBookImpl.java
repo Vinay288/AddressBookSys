@@ -295,11 +295,12 @@ public class AddressBookImpl implements AddressBookIf {
 		String json = gson.toJson(addressBook);
 		FileWriter writer = new FileWriter(name.concat(".json"));
 		writer.write(json);
+		writer.close();
 	}
 
 	public void readFromJson(String name, HashMap<String, Contact> addressBook) throws FileNotFoundException {
 		Gson gson = new Gson();
-		BufferedReader br = new BufferedReader(new FileReader(name));
+		BufferedReader br = new BufferedReader(new FileReader(name.concat(".json")));
 		Contact[] contactsFile = gson.fromJson(br, Contact[].class);
 		List<Contact> addressbook = Arrays.asList(contactsFile);
 		System.out.println(addressbook);
@@ -319,6 +320,13 @@ public class AddressBookImpl implements AddressBookIf {
 			}
 		}
 	}
+	public int readDb(String addressBookName) {
+		List<Contact> contacts=(new AddressBookDBService()).readContacts(addressBookName);
+		return contacts.size();
+	}
+	public void writeAddressBookDB(Contact contact,String addressBookName) {
+		(new AddressBookDBService()).writeAddressBookDB(contact,addressBookName);
+	}
 
 	public void readService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
 		if (ioService == IOService.CSV_IO)
@@ -329,7 +337,6 @@ public class AddressBookImpl implements AddressBookIf {
 			try {
 				readFromJson(name, addressBook);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

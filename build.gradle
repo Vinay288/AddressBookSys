@@ -27,4 +27,7 @@ dependencies {
     compile 'com.opencsv:opencsv:4.0'
     
     compile 'com.google.code.gson:gson:2.8.2'
+    // this is for mysql java connector
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.49'
+    testImplementation 'junit:junit:4.12'
 }

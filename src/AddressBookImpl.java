@@ -321,11 +321,11 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 	}
 	public int readDb(String addressBookName) {
-		List<Contact> contacts=(new AddressBookDBService()).readContacts(addressBookName);
+		List<Contact> contacts=AddressBookDBService.getDBInstance().readContacts(addressBookName);
 		return contacts.size();
 	}
 	public void writeAddressBookDB(Contact contact,String addressBookName) {
-		(new AddressBookDBService()).writeAddressBookDB(contact,addressBookName);
+		AddressBookDBService.getDBInstance().writeAddressBookDB(contact,addressBookName);
 	}
 
 	public void readService(String name, HashMap<String, Contact> addressBook, IOService ioService) {

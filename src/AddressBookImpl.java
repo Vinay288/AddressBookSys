@@ -316,9 +316,10 @@ public class AddressBookImpl implements AddressBookIf {
 			try {
 				writeToJson(name, addressBook);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if (ioService == IOService.DB_IO) {
+			writeAddressBookDB(addressBook.get(name), name);
 		}
 	}
 
@@ -341,6 +342,8 @@ public class AddressBookImpl implements AddressBookIf {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+		} else if (ioService == IOService.DB_IO) {
+			readDb(name);
 		}
 	}
 

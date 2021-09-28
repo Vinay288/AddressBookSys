@@ -11,7 +11,8 @@ import java.util.List;
 public class AddressBookDBService {
 	private static AddressBookDBService addressBookDBService;
 	private java.sql.PreparedStatement readContactPreparedStatement;
-	 private PreparedStatement contactAddedGivenRangeStatement;
+	private PreparedStatement contactAddedGivenRangeStatement;
+	private PreparedStatement contactsInGivenCityOrStateStatement;
 
 	private AddressBookDBService() {
 
@@ -127,28 +128,53 @@ public class AddressBookDBService {
 			throw new DBException(e.getMessage());
 		}
 	}
+
 	private void preparedStatementToretriveContactsInRange() {
-        try {
-            Connection connection = this.getConnection();
-            String query = "select * from contact_details where date_added between ? and ?";
-            contactAddedGivenRangeStatement = connection.prepareStatement(query);
-        } catch (Exception e) {
-            throw new DBException(e.getMessage());
-        }
-    }
+		try {
+			Connection connection = this.getConnection();
+			String query = "select * from contact_details where date_added between ? and ?";
+			contactAddedGivenRangeStatement = connection.prepareStatement(query);
+		} catch (Exception e) {
+			throw new DBException(e.getMessage());
+		}
+	}
 
 	public List<Contact> readConatctsAddedInRange(Date startDate, Date endDate) {
-        if (contactAddedGivenRangeStatement == null) {
-            this.preparedStatementToretriveContactsInRange();
-        }
-        try {
-        	contactAddedGivenRangeStatement.setDate(1, startDate);
-        	contactAddedGivenRangeStatement.setDate(2, endDate);
-            ResultSet resultSet = contactAddedGivenRangeStatement.executeQuery();
-            return this.getContactList(resultSet);
-        } catch (Exception e) {
-            throw new DBException(e.getMessage());
-        }
-    }
+		if (contactAddedGivenRangeStatement == null) {
+			this.preparedStatementToretriveContactsInRange();
+		}
+		try {
+			contactAddedGivenRangeStatement.setDate(1, startDate);
+			contactAddedGivenRangeStatement.setDate(2, endDate);
+			ResultSet resultSet = contactAddedGivenRangeStatement.executeQuery();
+			return this.getContactList(resultSet);
+		} catch (Exception e) {
+			throw new DBException(e.getMessage());
+		}
+	}
+
+	private void preparedStatementToretriveContactsInGivenCityOrState() {
+		try {
+			Connection connection = this.getConnection();
+			String query = "select * from contact_details c ,place p where c.place_id = p.place_id and city =? or state=?";
+			contactsInGivenCityOrStateStatement = connection.prepareStatement(query);
+		} catch (Exception e) {
+			throw new DBException(e.getMessage());
+		}
+	}
+
+	public List<Contact> readContactsInGivenCityOrState(String city, String state) {
+		if (contactsInGivenCityOrStateStatement == null) {
+			this.preparedStatementToretriveContactsInGivenCityOrState();
+		}
+		try {
+			contactsInGivenCityOrStateStatement.setString(1, city);
+			contactsInGivenCityOrStateStatement.setString(2, state);
+			ResultSet resultSet = contactsInGivenCityOrStateStatement.executeQuery();
+			return this.getContactList(resultSet);
+		} catch (Exception e) {
+			throw new DBException(e.getMessage());
+		}
+	}
 
 }

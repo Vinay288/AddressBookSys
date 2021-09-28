@@ -31,7 +31,7 @@ public class AddressBookSystemTest {
 		LocalDate endDate = LocalDate.of(2020, 6, 19);
 		List<Contact> contacts = addressBookImpl.readConatctsAddedInRange(Date.valueOf(startDate),
 				Date.valueOf(endDate));
-		System.out.println(contacts.size());
+		Assert.assertEquals(0, contacts.size());
 	}
 
 	@Test
@@ -40,6 +40,6 @@ public class AddressBookSystemTest {
 		String city = "badami";
 		String state = "karnataka";
 		List<Contact> contacts = addressBookImpl.readConatctsAddedInGivenCityOrState(city, state);
-		System.out.println(contacts.size());
+		Assert.assertEquals(12, contacts.size());
 	}
 }

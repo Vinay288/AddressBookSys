@@ -1,3 +1,5 @@
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Assert;
@@ -20,6 +22,14 @@ public class AddressBookSystemTest {
 		List<Contact> employeeList = addressBookImpl.readDb("address_book1");
 		Boolean result = addressBookImpl.compareContactSync(updatedContact, "address_book1");
 		Assert.assertTrue(result);
+	}
 
+	@Test
+	public void givenDateRange_WhenCorrect_RetrieveAllContactsAdded() {
+		AddressBookImpl addressBookImpl = new AddressBookImpl();
+		LocalDate startDate = LocalDate.of(2020, 4, 19);
+		LocalDate endDate = LocalDate.of(2020, 6, 19);
+		List<Contact> contacts = addressBookImpl.readConatctsAddedInRange(Date.valueOf(startDate), Date.valueOf(endDate));
+		System.out.println(contacts.size());
 	}
 }

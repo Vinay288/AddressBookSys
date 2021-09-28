@@ -320,12 +320,11 @@ public class AddressBookImpl implements AddressBookIf {
 			}
 		}
 	}
-	public int readDb(String addressBookName) {
-		List<Contact> contacts=AddressBookDBService.getDBInstance().readContacts(addressBookName);
-		return contacts.size();
+	public List<Contact> readDb(String addressBookName) {
+		return AddressBookDBService.getDBInstance().readContacts(addressBookName);
 	}
-	public void writeAddressBookDB(Contact contact,String addressBookName) {
-		AddressBookDBService.getDBInstance().writeAddressBookDB(contact,addressBookName);
+	public Contact writeAddressBookDB(Contact contact,String addressBookName) {
+		return AddressBookDBService.getDBInstance().writeAddressBookDB(contact,addressBookName);
 	}
 
 	public void readService(String name, HashMap<String, Contact> addressBook, IOService ioService) {
@@ -340,5 +339,13 @@ public class AddressBookImpl implements AddressBookIf {
 				e.printStackTrace();
 			}
 		}
+	}
+	public boolean compareContactSync(Contact updatedContact,String addressBokkName) {
+		List<Contact> contactsList=readDb(addressBokkName);
+		for(Contact contact:contactsList) {
+			if(contact.toString().equals(updatedContact.toString()))
+				return true;
+		}
+		return false;
 	}
 }

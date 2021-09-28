@@ -9,6 +9,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -348,4 +349,7 @@ public class AddressBookImpl implements AddressBookIf {
 		}
 		return false;
 	}
-}
+	public List<Contact> readConatctsAddedInRange(Date startDate, Date endDate) {
+		return AddressBookDBService.getDBInstance().readConatctsAddedInRange(startDate, endDate);
+	}
+	}

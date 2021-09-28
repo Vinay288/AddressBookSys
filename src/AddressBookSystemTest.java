@@ -29,7 +29,17 @@ public class AddressBookSystemTest {
 		AddressBookImpl addressBookImpl = new AddressBookImpl();
 		LocalDate startDate = LocalDate.of(2020, 4, 19);
 		LocalDate endDate = LocalDate.of(2020, 6, 19);
-		List<Contact> contacts = addressBookImpl.readConatctsAddedInRange(Date.valueOf(startDate), Date.valueOf(endDate));
+		List<Contact> contacts = addressBookImpl.readConatctsAddedInRange(Date.valueOf(startDate),
+				Date.valueOf(endDate));
+		System.out.println(contacts.size());
+	}
+
+	@Test
+	public void givenCityAndState_WhenCorrect_RetrieveAllContactsInCityOrState() {
+		AddressBookImpl addressBookImpl = new AddressBookImpl();
+		String city = "badami";
+		String state = "karnataka";
+		List<Contact> contacts = addressBookImpl.readConatctsAddedInGivenCityOrState(city, state);
 		System.out.println(contacts.size());
 	}
 }
